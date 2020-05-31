@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ruta_u/src/bloc/provider.dart';
+import 'package:ruta_u/src/bloc/provider_signup.dart';
+import 'package:ruta_u/src/models/usuarioModel.dart';
+class SignIn extends StatefulWidget {
+   @override
+  _SignInState createState() => _SignInState();
+}
 
-class SignIn extends StatelessWidget {
+class _SignInState extends State<SignIn> {
+  UserModel usuario = new UserModel();
+
+  Ciudad selectedCiudad;
+  List<Ciudad> ciudades = <Ciudad>[ Ciudad(id: 1, nombre: 'Villavicencio', departamento: Departamento(id: 1, nombre: 'Meta')), Ciudad(id: 2, nombre: 'Bogota', departamento: Departamento(id: 2, nombre: 'Cundinamarca'))];
+
+  Universidad selectedUniversidad;
+  List<Universidad> universidades = <Universidad>[ Universidad(id: 1, nombre: 'Universidad Cooperativa', logo: 'img1', sede: 1), Universidad(id: 2, nombre: 'Santo Tomas', logo: 'img2', sede: 2)];
+  
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final bloc = Provider.of(context);
+    final blocSignup = ProviderSignup.of(context);
     return Scaffold(
       body: DefaultTabController(
         length: 2,
@@ -70,7 +87,32 @@ class SignIn extends StatelessWidget {
                   ),
                 ),
                 SingleChildScrollView(
-                  child: Text("data"),
+                  child: Form(
+                    key: _formKey,
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                      left: 40.0, right: 40.0, top: 40.0),
+                      child: Column(
+                        children: <Widget>[
+                          _crearNombre(blocSignup),
+                          SizedBox(height: 10.0),
+                          _crearApellido(blocSignup),
+                          SizedBox(height: 10.0),
+                          _crearCelular(blocSignup),
+                          SizedBox(height: 10.0),
+                          _crearEmailSignup(blocSignup),
+                          SizedBox(height: 10.0),
+                          _crearPasswordSignup(blocSignup),
+                          SizedBox(height: 30.0),
+                          _crearCiudad(),
+                          SizedBox(height: 20.0),
+                          _crearUniversidad(),
+                          SizedBox(height: 40.0),
+                          _crearBotonSignUp(blocSignup)
+                        ],
+                      ),
+                    ),
+                  ),
                 )
               ],
             )),
@@ -226,4 +268,285 @@ class SignIn extends StatelessWidget {
   _login(LoginBloc bloc, BuildContext context) {
     Navigator.pushReplacementNamed(context, '/home');
   }
+
+  //Registro
+  Widget _crearNombre(SignupBloc blocSignup) {
+    return StreamBuilder(
+      stream: blocSignup.nameStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return TextFormField(
+          initialValue: usuario.nombre,
+          autofocus: true,
+          style: GoogleFonts.nunitoSans(
+            color: Color(0xff383D62),
+            letterSpacing: 0.07,
+            fontSize: 18,
+          ),
+          inputFormatters: [WhitelistingTextInputFormatter(RegExp("[a-zA-Z]"))],
+          decoration: InputDecoration(
+            errorText: snapshot.error,
+            hintText: "Dany Escobar",
+            labelText: 'Nombres',
+            focusColor: Color(0xff3369FF),
+            labelStyle: TextStyle(
+              color: Color.fromRGBO(56, 61, 98, 0.6),
+            ),
+          ),
+          onSaved: (value) => usuario.nombre = value,
+          onChanged: blocSignup.changeName,
+        );
+      },
+    );
+    
+  }
+
+  Widget _crearApellido(SignupBloc blocSignup) {
+    return StreamBuilder(
+      stream: blocSignup.lastNameStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return TextFormField( 
+          initialValue: usuario.apellido,
+          autofocus: true,
+          style: GoogleFonts.nunitoSans(
+            color: Color(0xff383D62),
+            letterSpacing: 0.07,
+            fontSize: 18,
+          ),
+          inputFormatters: [WhitelistingTextInputFormatter(RegExp("[a-zA-Z]"))],
+          decoration: InputDecoration(
+            errorText: snapshot.error,
+            hintText: "Escobar Parrado",
+            labelText: 'Apellido',
+            focusColor: Color(0xff3369FF),
+            labelStyle: TextStyle(
+              color: Color.fromRGBO(56, 61, 98, 0.6),
+            ),
+          ),
+          onSaved: (value) => usuario.apellido = value,
+          onChanged: blocSignup.changeLastName
+        );
+      },
+    );
+    
+  }
+
+  Widget _crearCelular(SignupBloc blocSignup) {
+    return StreamBuilder(
+      stream: blocSignup.celularStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return TextFormField( 
+          initialValue: usuario.celular,
+          autofocus: true,
+          style: GoogleFonts.nunitoSans(
+            color: Color(0xff383D62),
+            letterSpacing: 0.07,
+            fontSize: 18,
+          ),
+          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+          keyboardType: TextInputType.number,
+          decoration: InputDecoration(
+            errorText: snapshot.error,
+            hintText: "3123432500",
+            labelText: 'Celular',
+            focusColor: Color(0xff3369FF),
+            labelStyle: TextStyle(
+              color: Color.fromRGBO(56, 61, 98, 0.6),
+            ),
+          ),
+          onSaved: (value) => usuario.celular = value,
+          onChanged: blocSignup.changeCelular
+        );
+      },
+    );
+    
+  }
+
+  Widget _crearEmailSignup(SignupBloc blocSignup) {
+    return StreamBuilder(
+      stream: blocSignup.emailStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return TextFormField(
+          initialValue: usuario.correo,
+          autofocus: true,
+          keyboardType: TextInputType.emailAddress,
+          style: GoogleFonts.nunitoSans(
+            color: Color(0xff383D62),
+            letterSpacing: 0.07,
+            fontSize: 18,
+          ),
+          decoration: InputDecoration(
+            errorText: snapshot.error,
+            hintText: 'ejemplo@gmail.com',
+            labelText: 'Correo',
+            focusColor: Color(0xff3369FF),
+            labelStyle: TextStyle(
+              color: Color.fromRGBO(56, 61, 98, 0.6),
+            ),
+          ),
+          onSaved: (value) => usuario.correo = value,
+          onChanged: blocSignup.changeEmail,
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Please enter some text';
+            }
+            return null;
+          },
+        );
+      },
+    );
+  }
+
+  Widget _crearPasswordSignup(SignupBloc blocSignup) {
+    return StreamBuilder(
+      stream: blocSignup.passwordStream,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        return TextFormField(
+          initialValue: usuario.password,
+          obscureText: true,
+          style: GoogleFonts.nunitoSans(
+            color: Color(0xff383D62),
+            letterSpacing: 0.1,
+            fontSize: 18,
+          ),
+          decoration: InputDecoration(
+            errorText: snapshot.error,
+            labelText: 'Contraseña',
+            labelStyle: TextStyle(
+              color: Color.fromRGBO(56, 61, 98, 0.6),
+            ),
+          ),
+          onSaved: (value) => usuario.password = value,
+          onChanged: blocSignup.changePassword,
+          validator: (value) {
+            if (value.isEmpty) {
+              return 'Please enter some text';
+            }
+            return null;
+          },
+        );
+      },
+    );
+  }
+
+  Widget _crearCiudad() {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 0),
+      child: Center( 
+        child: Container(
+          width: 350.0,
+          child: DropdownButton<Ciudad>(
+          // elevation: 0,
+            style: GoogleFonts.nunitoSans(
+              color: Color(0xff383D62),
+              letterSpacing: 0.07,
+              fontSize: 18,
+            ),
+            hint: Text("Ciudad"),
+            value: selectedCiudad,
+            onChanged: (Ciudad newValue) {
+              setState(() {
+                selectedCiudad = newValue;
+                usuario.ciudad = newValue;
+              });
+            },
+            items: ciudades.map((Ciudad ciudad) {
+              return DropdownMenuItem<Ciudad>(
+                value: ciudad,
+                child: Text(
+                  ciudad.nombre,
+                  style: TextStyle(color: Colors.black),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _crearUniversidad() {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 0),
+      child: Center( 
+        child: Container(
+          width: 350.0,
+          child: DropdownButton<Universidad>(
+          // elevation: 0,
+            style: GoogleFonts.nunitoSans(
+              color: Color(0xff383D62),
+              letterSpacing: 0.07,
+              fontSize: 18,
+            ),
+            hint: Text("Universidad"),
+            value: selectedUniversidad,
+            onChanged: (Universidad newValue) {
+              setState(() {
+                selectedUniversidad = newValue;
+                usuario.universidad = newValue;
+              });
+            },
+            items: universidades.map((Universidad universidad) {
+              return DropdownMenuItem<Universidad>(
+                value: universidad,
+                child: Text(
+                  universidad.nombre,
+                  style: TextStyle(color: Colors.black),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _crearBotonSignUp(SignupBloc blocSignup) {
+    return StreamBuilder<Object>(
+      stream: blocSignup.formValidStream,
+      builder: (context, snapshot) {
+        return RaisedButton(
+          onPressed: snapshot.hasData ? () => _submit(blocSignup, context) : null,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          color: Color(0xff3369FF),
+          disabledColor: Color(0xffBCCBF6),
+          textColor: Colors.white,
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 17.0),
+            width: double.infinity,
+            child: Text(
+              'Ingresar',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.nunitoSans(
+                letterSpacing: 0.1,
+                fontSize: 18,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  _submit(SignupBloc blocSignup, BuildContext context) {
+
+    if( !_formKey.currentState.validate() ) return;
+
+    _formKey.currentState.save();
+
+    print( usuario.nombre);
+    print( usuario.apellido);
+    print( usuario.ciudad);
+    print( usuario.correo);
+    print( usuario.celular);
+    print( usuario.password);
+    print( usuario.universidad);
+    // print( selectedCiudad.nombre );
+    // print( selectedCiudad.id );
+    
+  }
+
 }
+
