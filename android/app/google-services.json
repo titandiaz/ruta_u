@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1028193763377",
+    "firebase_url": "https://rutau-9b415.firebaseio.com",
+    "project_id": "rutau-9b415",
+    "storage_bucket": "rutau-9b415.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1028193763377:android:cfdc95dea7fa259cf89510",
+        "android_client_info": {
+          "package_name": "com.example.ruta_u"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1028193763377-vtpd0qhlkhj2v26tekvfa5rjeind7qtv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2FsgZ2wtdna-Xocu4UjbLpWtgC1NUizY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1028193763377-vtpd0qhlkhj2v26tekvfa5rjeind7qtv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

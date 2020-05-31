@@ -64,13 +64,14 @@ class SignIn extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 70.0),
-                        _crearBoton()
+                        _crearBoton(bloc)
                       ],
                     ),
                   ),
                 ),
-                // _iniciarSesion(),
-                Icon(Icons.directions_car),
+                SingleChildScrollView(
+                  child: Text("data"),
+                )
               ],
             )),
       ),
@@ -97,7 +98,7 @@ class SignIn extends StatelessWidget {
         borderRadius: BorderRadius.circular(200),
         gradient: LinearGradient(
           colors: <Color>[
-            Color.fromRGBO(255, 255, 255, 0.05),
+            Color.fromRGBO(255, 255, 255, 0.07),
             Color.fromRGBO(255, 255, 255, 0.01)
           ],
         ),
@@ -116,7 +117,7 @@ class SignIn extends StatelessWidget {
       children: <Widget>[
         fondoAzul,
         Positioned(
-          top: -135.0,
+          top: -140.0,
           left: 90.0,
           child: circulo,
         ),
@@ -134,6 +135,7 @@ class SignIn extends StatelessWidget {
       stream: bloc.emailStream,
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return TextFormField(
+          autofocus: true,
           keyboardType: TextInputType.emailAddress,
           style: GoogleFonts.nunitoSans(
             color: Color(0xff383D62),
@@ -191,28 +193,37 @@ class SignIn extends StatelessWidget {
     );
   }
 
-  Widget _crearBoton() {
-    return RaisedButton(
-      onPressed: null,
-      elevation: 0,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(5.0),
-      ),
-      color: Color(0xff3369FF),
-      disabledColor: Color(0xffBCCBF6),
-      textColor: Colors.white,
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 17.0),
-        width: double.infinity,
-        child: Text(
-          'Ingresar',
-          textAlign: TextAlign.center,
-          style: GoogleFonts.nunitoSans(
-            letterSpacing: 0.1,
-            fontSize: 18,
+  Widget _crearBoton(LoginBloc bloc) {
+    return StreamBuilder<Object>(
+      stream: bloc.formValidStream,
+      builder: (context, snapshot) {
+        return RaisedButton(
+          onPressed: snapshot.hasData ? () => _login(bloc, context) : null,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
           ),
-        ),
-      ),
+          color: Color(0xff3369FF),
+          disabledColor: Color(0xffBCCBF6),
+          textColor: Colors.white,
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 17.0),
+            width: double.infinity,
+            child: Text(
+              'Ingresar',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.nunitoSans(
+                letterSpacing: 0.1,
+                fontSize: 18,
+              ),
+            ),
+          ),
+        );
+      },
     );
+  }
+
+  _login(LoginBloc bloc, BuildContext context) {
+    Navigator.pushReplacementNamed(context, '/home');
   }
 }
