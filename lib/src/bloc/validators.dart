@@ -21,4 +21,13 @@ class Validators {
       sink.addError('Mas de seis caracteres');
     }
   });
+
+  final validarName = StreamTransformer<String, String>.fromHandlers(
+    handleData: (name, sink) {
+    if (name.isEmpty) {
+      sink.addError("Ingresa el campo");
+    } else {
+      sink.add(name);
+    }
+  });
 }
