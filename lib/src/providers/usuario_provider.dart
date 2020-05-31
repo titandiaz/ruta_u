@@ -43,7 +43,7 @@ class AuthProvider {
       _prefs.token = user.uid;
 
       await DatabaseService(uid: user.uid)
-          .updateUserData(email, 'prueba', 'UCC');
+          .updateUserData(email, 'prueba', 'Santo thomas', 'urlPhoto');
       return _userFromFirebaseUser(user);
     } catch (e) {
       print(e.toString());

@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
                   fontSize: 14, fontStyle: FontStyle.normal),
             ),
           ),
-          initialRoute: '/type_user',
+          initialRoute: '/sign_in',
           routes: {
             '/sign_in': (BuildContext context) => SignIn(),
             '/home': (BuildContext context) => HomePage(),

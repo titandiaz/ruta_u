@@ -11,8 +11,13 @@ class DatabaseService {
     String correo,
     String nombre,
     String universidad,
+    String foto,
   ) async {
-    return await usersColletion.document(uid).setData(
-        {'correo': correo, 'nombre': nombre, 'universidad': universidad});
+    return await usersColletion.document(uid).setData({
+      'correo': correo,
+      'nombre': nombre,
+      'universidad': universidad,
+      'foto': foto
+    });
   }
 }

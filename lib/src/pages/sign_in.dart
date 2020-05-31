@@ -275,35 +275,35 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  Widget _crearBotonRegistrar(LoginBloc bloc) {
-    return StreamBuilder<Object>(
-      stream: bloc.formValidStream,
-      builder: (context, snapshot) {
-        return RaisedButton(
-          onPressed: snapshot.hasData ? () => _registrar(bloc, context) : null,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(5.0),
-          ),
-          color: Color(0xff3369FF),
-          disabledColor: Color(0xffBCCBF6),
-          textColor: Colors.white,
-          child: Container(
-            padding: EdgeInsets.symmetric(vertical: 17.0),
-            width: double.infinity,
-            child: Text(
-              'Registrarte',
-              textAlign: TextAlign.center,
-              style: GoogleFonts.nunitoSans(
-                letterSpacing: 0.1,
-                fontSize: 18,
-              ),
-            ),
-          ),
-        );
-      },
-    );
-  }
+  // Widget _crearBotonRegistrar(LoginBloc bloc) {
+  //   return StreamBuilder<Object>(
+  //     stream: bloc.formValidStream,
+  //     builder: (context, snapshot) {
+  //       return RaisedButton(
+  //         onPressed: snapshot.hasData ? () => _registrar(bloc, context) : null,
+  //         elevation: 0,
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(5.0),
+  //         ),
+  //         color: Color(0xff3369FF),
+  //         disabledColor: Color(0xffBCCBF6),
+  //         textColor: Colors.white,
+  //         child: Container(
+  //           padding: EdgeInsets.symmetric(vertical: 17.0),
+  //           width: double.infinity,
+  //           child: Text(
+  //             'Registrarte',
+  //             textAlign: TextAlign.center,
+  //             style: GoogleFonts.nunitoSans(
+  //               letterSpacing: 0.1,
+  //               fontSize: 18,
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   _login(LoginBloc bloc, BuildContext context) async {
     final info = await authProvider.signInWithEmailAndPassword(
@@ -556,7 +556,7 @@ class _SignInState extends State<SignIn> {
       builder: (context, snapshot) {
         return RaisedButton(
           onPressed:
-              snapshot.hasData ? () => _submit(blocSignup, context) : null,
+              snapshot.hasData ? () => _registrar(blocSignup, context) : null,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
@@ -568,7 +568,7 @@ class _SignInState extends State<SignIn> {
             padding: EdgeInsets.symmetric(vertical: 17.0),
             width: double.infinity,
             child: Text(
-              'Ingresar',
+              'Registrate',
               textAlign: TextAlign.center,
               style: GoogleFonts.nunitoSans(
                 letterSpacing: 0.1,
