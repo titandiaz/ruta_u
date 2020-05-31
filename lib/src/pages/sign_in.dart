@@ -306,7 +306,6 @@ class _SignInState extends State<SignIn> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return TextFormField( 
           initialValue: usuario.apellido,
-          autofocus: true,
           style: GoogleFonts.nunitoSans(
             color: Color(0xff383D62),
             letterSpacing: 0.07,
@@ -336,7 +335,6 @@ class _SignInState extends State<SignIn> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return TextFormField( 
           initialValue: usuario.celular,
-          autofocus: true,
           style: GoogleFonts.nunitoSans(
             color: Color(0xff383D62),
             letterSpacing: 0.07,
@@ -367,7 +365,6 @@ class _SignInState extends State<SignIn> {
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         return TextFormField(
           initialValue: usuario.correo,
-          autofocus: true,
           keyboardType: TextInputType.emailAddress,
           style: GoogleFonts.nunitoSans(
             color: Color(0xff383D62),
