@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ruta_u/src/bloc/provider.dart';
+import 'package:ruta_u/src/providers/usuario_provider.dart';
+import 'package:ruta_u/src/utils/utils.dart';
 
 class SignIn extends StatelessWidget {
+  // final usuarioProvider = new UsuarioProvider();
+  final authProvider = new AuthProvider();
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -70,7 +75,19 @@ class SignIn extends StatelessWidget {
                   ),
                 ),
                 SingleChildScrollView(
-                  child: Text("data"),
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 40.0, right: 40.0, top: 40.0),
+                    child: Column(
+                      children: <Widget>[
+                        _crearEmail(bloc),
+                        SizedBox(height: 20.0),
+                        _crearPassword(bloc),
+                        SizedBox(height: 70.0),
+                        _crearBotonRegistrar(bloc)
+                      ],
+                    ),
+                  ),
                 )
               ],
             )),
@@ -152,12 +169,6 @@ class SignIn extends StatelessWidget {
             ),
           ),
           onChanged: bloc.changeEmail,
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'Please enter some text';
-            }
-            return null;
-          },
         );
       },
     );
@@ -223,7 +234,53 @@ class SignIn extends StatelessWidget {
     );
   }
 
-  _login(LoginBloc bloc, BuildContext context) {
-    Navigator.pushReplacementNamed(context, '/home');
+  Widget _crearBotonRegistrar(LoginBloc bloc) {
+    return StreamBuilder<Object>(
+      stream: bloc.formValidStream,
+      builder: (context, snapshot) {
+        return RaisedButton(
+          onPressed: snapshot.hasData ? () => _registrar(bloc, context) : null,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          color: Color(0xff3369FF),
+          disabledColor: Color(0xffBCCBF6),
+          textColor: Colors.white,
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 17.0),
+            width: double.infinity,
+            child: Text(
+              'Registrarte',
+              textAlign: TextAlign.center,
+              style: GoogleFonts.nunitoSans(
+                letterSpacing: 0.1,
+                fontSize: 18,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  _login(LoginBloc bloc, BuildContext context) async {
+    final info = await authProvider.signInWithEmailAndPassword(
+        bloc.email, bloc.password);
+    if (info != null) {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      mostrarAlerta(context, 'El correo y contraseña no son validos');
+    }
+  }
+
+  _registrar(LoginBloc bloc, BuildContext context) async {
+    final info =
+        authProvider.registerWithEmailAndPassword(bloc.email, bloc.password);
+    if (info != null) {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      mostrarAlerta(context, 'Datos invalidos');
+    }
   }
 }
