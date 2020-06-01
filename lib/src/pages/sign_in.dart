@@ -275,36 +275,6 @@ class _SignInState extends State<SignIn> {
     );
   }
 
-  // Widget _crearBotonRegistrar(LoginBloc bloc) {
-  //   return StreamBuilder<Object>(
-  //     stream: bloc.formValidStream,
-  //     builder: (context, snapshot) {
-  //       return RaisedButton(
-  //         onPressed: snapshot.hasData ? () => _registrar(bloc, context) : null,
-  //         elevation: 0,
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(5.0),
-  //         ),
-  //         color: Color(0xff3369FF),
-  //         disabledColor: Color(0xffBCCBF6),
-  //         textColor: Colors.white,
-  //         child: Container(
-  //           padding: EdgeInsets.symmetric(vertical: 17.0),
-  //           width: double.infinity,
-  //           child: Text(
-  //             'Registrarte',
-  //             textAlign: TextAlign.center,
-  //             style: GoogleFonts.nunitoSans(
-  //               letterSpacing: 0.1,
-  //               fontSize: 18,
-  //             ),
-  //           ),
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
-
   _login(LoginBloc bloc, BuildContext context) async {
     final info = await authProvider.signInWithEmailAndPassword(
         bloc.email, bloc.password);
@@ -317,9 +287,9 @@ class _SignInState extends State<SignIn> {
 
   _registrar(SignupBloc blocSignup, BuildContext context) async {
     final info = authProvider.registerWithEmailAndPassword(
-        blocSignup.email, blocSignup.password);
+        blocSignup.email, blocSignup.password, usuario);
     if (info != null) {
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/type_user');
     } else {
       mostrarAlerta(context, 'Datos invalidos');
     }
