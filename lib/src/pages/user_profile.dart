@@ -9,12 +9,12 @@ class UserProfile extends StatelessWidget {
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () => {},
+          onPressed: () => Navigator.pushReplacementNamed(context, '/initial_map'),
         ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.edit),
-            onPressed: () => {},
+            onPressed: () => Navigator.pushReplacementNamed(context, '/edit_profile'),
           ),
         ],
         title: Text('Perfíl'),

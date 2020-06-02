@@ -29,7 +29,7 @@ class _CarPageState extends State<CarPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             IconButton(
-              onPressed: () => Navigator.pushReplacementNamed(context, '/initial_map'),
+              onPressed: () => Navigator.pushReplacementNamed(context, '/type_user'),
               icon: Icon(Icons.arrow_back, color: Colors.black),
             ),
             // Your widgets here
@@ -240,6 +240,7 @@ class _CarPageState extends State<CarPage> {
     if (!_formKey.currentState.validate()) return;
 
     _formKey.currentState.save();
+    Navigator.pushReplacementNamed(context, '/initial_map');
 
     print(carro.marca);
     print(carro.modelo);

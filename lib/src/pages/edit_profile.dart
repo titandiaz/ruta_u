@@ -48,7 +48,7 @@ class _EditProfileState extends State<EditProfile> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             IconButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.pushReplacementNamed(context, '/user_profile'),
               icon: Icon(Icons.arrow_back, color: Colors.white),
             ),
             // Your widgets here
@@ -329,6 +329,7 @@ class _EditProfileState extends State<EditProfile> {
     if (!_formKey.currentState.validate()) return;
 
     _formKey.currentState.save();
+    Navigator.pushReplacementNamed(context, '/user_profile');
 
     print(usuario.nombre);
     print(usuario.apellido);

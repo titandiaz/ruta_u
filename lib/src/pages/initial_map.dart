@@ -51,6 +51,18 @@ class _InitialMapState extends State<InitialMap> {
           padding: EdgeInsets.zero,
           children: <Widget>[
             SizedBox(height: 50.0),
+            // ListTile(
+            //   title: Text('Editar Perfil',
+            //   style: GoogleFonts.nunitoSans(
+            //     color: Color(0xff383D62),
+            //     letterSpacing: 0.07,
+            //     fontSize: 18,
+            //   ),
+            //   ),
+            //   onTap: () {
+            //     Navigator.pushReplacementNamed(context, '/edit_profile');
+            //   },
+            // ),
             ListTile(
               title: Text('Mi perfil',
               style: GoogleFonts.nunitoSans(
@@ -60,7 +72,31 @@ class _InitialMapState extends State<InitialMap> {
               ),
               ),
               onTap: () {
-                Navigator.pushReplacementNamed(context, '/edit_profile');
+                Navigator.pushReplacementNamed(context, '/user_profile');
+              },
+            ),
+            ListTile(
+              title: Text('Tipo de usuario',
+              style: GoogleFonts.nunitoSans(
+                color: Color(0xff383D62),
+                letterSpacing: 0.07,
+                fontSize: 18,
+              ),
+              ),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/type_user');
+              },
+            ),
+            ListTile(
+              title: Text('Salir',
+              style: GoogleFonts.nunitoSans(
+                color: Color(0xff383D62),
+                letterSpacing: 0.07,
+                fontSize: 18,
+              ),
+              ),
+              onTap: () {
+                Navigator.pushReplacementNamed(context, '/sign_in');
               },
             ),
           ],
