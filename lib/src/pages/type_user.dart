@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:ruta_u/src/models/usuarioModel.dart';
+import 'package:ruta_u/src/providers/usuario_provider.dart';
 
 class IconMenu {
   final IconData iconName;
   final String titleIcon;
   IconMenu({this.iconName, this.titleIcon});
 }
+// Type usuario = Type(carro: )
 
 List<IconMenu> iconList = [
   IconMenu(iconName: Icons.ac_unit, titleIcon: "AC Unit"),
@@ -22,7 +25,10 @@ class TypeUser extends StatefulWidget {
 }
 
 class _TypeUserState extends State<TypeUser> {
+  final authProvider = new AuthProvider();
   int selectedIndex = 1;
+  Type userTypeCarro = new Type(id: 1, nombreType: 'Pasajero', carro: null);
+  Type userTypePasajero = new Type(id: 2, nombreType: 'Carro', carro: null);
 
   @override
   Widget build(BuildContext context) {
@@ -172,11 +178,13 @@ class _TypeUserState extends State<TypeUser> {
     );
   }
 
-  _next() {
+  _next() async {
     if (selectedIndex == 1) {
-      Navigator.pushReplacementNamed(context, '/home');
+      final info = await authProvider.updateInfoTypeUser(userTypePasajero);
+      Navigator.pushReplacementNamed(context, '/initial_map');
     } else {
-      Navigator.pushReplacementNamed(context, '/home');
+      final info = await authProvider.updateInfoTypeUser(userTypeCarro);
+      Navigator.pushReplacementNamed(context, '/car_page');
     }
   }
 }

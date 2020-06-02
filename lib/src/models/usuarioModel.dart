@@ -22,7 +22,7 @@ class UserModel {
     this.ciudad,
     this.correo,
     this.foto,
-    this.nombre = '',
+    this.nombre,
     this.type,
     this.universidad,
   });
@@ -43,12 +43,12 @@ class UserModel {
         "apellido": apellido,
         "celular": celular,
         "password": password,
-        "ciudad": ciudad.toJson(),
+        "ciudad": null,
         "correo": correo,
         "foto": foto,
         "nombre": nombre,
-        "type": type.toJson(),
-        "universidad": universidad.toJson(),
+        "type": null,
+        "universidad": null,
       };
 }
 

@@ -6,6 +6,7 @@ import 'package:ruta_u/src/bloc/provider_signup.dart';
 import 'package:ruta_u/src/models/usuarioModel.dart';
 import 'package:ruta_u/src/providers/usuario_provider.dart';
 import 'package:ruta_u/src/utils/utils.dart';
+import 'package:ruta_u/src/utils/loading.dart';
 
 class SignIn extends StatefulWidget {
   @override
@@ -13,8 +14,9 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  UserModel usuario = new UserModel();
+  bool loading = false;
   final authProvider = new AuthProvider();
+  UserModel usuario = new UserModel();
   Ciudad selectedCiudad;
   List<Ciudad> ciudades = <Ciudad>[
     Ciudad(
@@ -26,7 +28,6 @@ class _SignInState extends State<SignIn> {
         nombre: 'Bogota',
         departamento: Departamento(id: 2, nombre: 'Cundinamarca'))
   ];
-
   Universidad selectedUniversidad;
   List<Universidad> universidades = <Universidad>[
     Universidad(
@@ -40,100 +41,102 @@ class _SignInState extends State<SignIn> {
     final size = MediaQuery.of(context).size;
     final bloc = Provider.of(context);
     final blocSignup = ProviderSignup.of(context);
-    return Scaffold(
-      body: DefaultTabController(
-        length: 2,
-        child: NestedScrollView(
-            headerSliverBuilder:
-                (BuildContext context, bool innerBoxIsScrolled) {
-              return <Widget>[
-                SliverAppBar(
-                  backgroundColor: Color(0xff3369FF),
-                  expandedHeight: size.height * 0.36,
-                  floating: false,
-                  elevation: 0,
-                  pinned: true,
-                  flexibleSpace: FlexibleSpaceBar(
-                    centerTitle: true,
-                    background: _crearFondo(context),
-                  ),
-                  bottom: TabBar(
-                    labelColor: Colors.white,
-                    indicatorColor: Colors.white,
-                    unselectedLabelColor: Colors.white,
-                    indicatorWeight: 4.0,
-                    indicatorSize: TabBarIndicatorSize.label,
-                    labelStyle: GoogleFonts.nunitoSans(
-                        fontSize: 20, fontStyle: FontStyle.normal),
-                    tabs: [
-                      Tab(text: 'Iniciar sesión'),
-                      Tab(text: 'Regístrate'),
-                    ],
-                  ),
-                ),
-              ];
-            },
-            body: TabBarView(
-              children: <Widget>[
-                SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.only(
-                        left: 40.0, right: 40.0, top: 40.0),
-                    child: Column(
-                      children: <Widget>[
-                        _crearEmail(bloc),
-                        SizedBox(height: 20.0),
-                        _crearPassword(bloc),
-                        SizedBox(height: 20.0),
-                        Container(
-                          width: double.infinity,
-                          child: Text(
-                            'Recuperar contraseña',
-                            style: TextStyle(
-                              color: Color(0xff3369FF),
-                              fontSize: 14,
-                            ),
-                            textAlign: TextAlign.right,
+    return loading
+        ? Loading()
+        : Scaffold(
+            body: DefaultTabController(
+              length: 2,
+              child: NestedScrollView(
+                  headerSliverBuilder:
+                      (BuildContext context, bool innerBoxIsScrolled) {
+                    return <Widget>[
+                      SliverAppBar(
+                        backgroundColor: Color(0xff3369FF),
+                        expandedHeight: size.height * 0.36,
+                        floating: false,
+                        elevation: 0,
+                        pinned: true,
+                        flexibleSpace: FlexibleSpaceBar(
+                          centerTitle: true,
+                          background: _crearFondo(context),
+                        ),
+                        bottom: TabBar(
+                          labelColor: Colors.white,
+                          indicatorColor: Colors.white,
+                          unselectedLabelColor: Colors.white,
+                          indicatorWeight: 4.0,
+                          indicatorSize: TabBarIndicatorSize.label,
+                          labelStyle: GoogleFonts.nunitoSans(
+                              fontSize: 20, fontStyle: FontStyle.normal),
+                          tabs: [
+                            Tab(text: 'Iniciar sesión'),
+                            Tab(text: 'Regístrate'),
+                          ],
+                        ),
+                      ),
+                    ];
+                  },
+                  body: TabBarView(
+                    children: <Widget>[
+                      SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 40.0, right: 40.0, top: 40.0),
+                          child: Column(
+                            children: <Widget>[
+                              _crearEmail(bloc),
+                              SizedBox(height: 20.0),
+                              _crearPassword(bloc),
+                              SizedBox(height: 20.0),
+                              Container(
+                                width: double.infinity,
+                                child: Text(
+                                  'Recuperar contraseña',
+                                  style: TextStyle(
+                                    color: Color(0xff3369FF),
+                                    fontSize: 14,
+                                  ),
+                                  textAlign: TextAlign.right,
+                                ),
+                              ),
+                              SizedBox(height: 70.0),
+                              _crearBoton(bloc)
+                            ],
                           ),
                         ),
-                        SizedBox(height: 70.0),
-                        _crearBoton(bloc)
-                      ],
-                    ),
-                  ),
-                ),
-                SingleChildScrollView(
-                  child: Form(
-                    key: _formKey,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          left: 40.0, right: 40.0, top: 40.0),
-                      child: Column(
-                        children: <Widget>[
-                          _crearNombre(blocSignup),
-                          SizedBox(height: 10.0),
-                          _crearApellido(blocSignup),
-                          SizedBox(height: 10.0),
-                          _crearCelular(blocSignup),
-                          SizedBox(height: 10.0),
-                          _crearEmailSignup(blocSignup),
-                          SizedBox(height: 10.0),
-                          _crearPasswordSignup(blocSignup),
-                          SizedBox(height: 30.0),
-                          _crearCiudad(),
-                          SizedBox(height: 20.0),
-                          _crearUniversidad(),
-                          SizedBox(height: 40.0),
-                          _crearBotonSignUp(blocSignup)
-                        ],
                       ),
-                    ),
-                  ),
-                )
-              ],
-            )),
-      ),
-    );
+                      SingleChildScrollView(
+                        child: Form(
+                          key: _formKey,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                left: 40.0, right: 40.0, top: 40.0),
+                            child: Column(
+                              children: <Widget>[
+                                _crearNombre(blocSignup),
+                                SizedBox(height: 10.0),
+                                _crearApellido(blocSignup),
+                                SizedBox(height: 10.0),
+                                _crearCelular(blocSignup),
+                                SizedBox(height: 10.0),
+                                _crearEmailSignup(blocSignup),
+                                SizedBox(height: 10.0),
+                                _crearPasswordSignup(blocSignup),
+                                SizedBox(height: 30.0),
+                                _crearCiudad(),
+                                SizedBox(height: 20.0),
+                                _crearUniversidad(),
+                                SizedBox(height: 40.0),
+                                _crearBotonSignUp(blocSignup)
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  )),
+            ),
+          );
   }
 
   Widget _crearFondo(BuildContext context) {
@@ -286,12 +289,16 @@ class _SignInState extends State<SignIn> {
   }
 
   _registrar(SignupBloc blocSignup, BuildContext context) async {
+    if (!_formKey.currentState.validate()) return;
+    loading = true;
+    _formKey.currentState.save();
     final info = authProvider.registerWithEmailAndPassword(
         blocSignup.email, blocSignup.password, usuario);
     if (info != null) {
       Navigator.pushReplacementNamed(context, '/type_user');
     } else {
       mostrarAlerta(context, 'Datos invalidos');
+      loading = false;
     }
   }
 

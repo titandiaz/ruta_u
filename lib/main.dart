@@ -5,6 +5,7 @@ import 'package:ruta_u/src/bloc/provider_signup.dart';
 import 'package:ruta_u/src/pages/home_page.dart';
 import 'package:ruta_u/src/pages/sign_in.dart';
 import 'package:ruta_u/src/pages/type_user.dart';
+import 'package:ruta_u/src/pages/user_profile.dart';
 import 'package:ruta_u/src/preferencias_usuario/preferencias_usuario.dart';
 
 void main() async {
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
             '/sign_in': (BuildContext context) => SignIn(),
             '/home': (BuildContext context) => HomePage(),
             '/type_user': (BuildContext context) => TypeUser(),
+            '/user_profile': (BuildContext context) => UserProfile(),
           },
         ),
       ),
