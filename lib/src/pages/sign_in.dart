@@ -282,7 +282,7 @@ class _SignInState extends State<SignIn> {
     final info = await authProvider.signInWithEmailAndPassword(
         bloc.email, bloc.password);
     if (info != null) {
-      Navigator.pushReplacementNamed(context, '/home');
+      Navigator.pushReplacementNamed(context, '/initial_map');
     } else {
       mostrarAlerta(context, 'El correo y contraseña no son validos');
     }
