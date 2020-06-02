@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ruta_u/src/models/usuarioModel.dart';
 
 class DatabaseService {
   final String uid;
@@ -20,4 +23,8 @@ class DatabaseService {
       'foto': foto
     });
   }
+
+  // Future updateUserData(UserModel user) async {
+  //   return await usersColletion.document(uid).setData({userModelToJson(user)});
+  // }
 }
